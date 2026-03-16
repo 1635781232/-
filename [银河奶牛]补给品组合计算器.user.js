@@ -2,8 +2,8 @@
 // @name         [银河奶牛]补给品组合计算器
 // @namespace    http://tampermonkey.net/
 // @version      1.2
-// @description  计算补给品的搭配性价比，找出最佳回血/回蓝组合
-// @author       User
+// @description  计算补给品的搭配性价比，找出最佳回血/回蓝组合。支持左买(买入价)、右买(卖出价)和平均价格的性价比分析，可自定义最低恢复量需求。
+// @author       银河奶牛
 // @license      CC-BY-NC-SA-4.0
 // @match        https://www.milkywayidle.com/*
 // @match        https://test.milkywayidle.com/*
@@ -13,7 +13,43 @@
 // @grant        GM_getValue
 // @grant        GM_setValue
 // @require      https://cdnjs.cloudflare.com/ajax/libs/mathjs/12.4.2/math.js
+// @homepage     https://github.com/1635781232/
+// @homepageURL  https://github.com/1635781232/
+// @source       https://github.com/1635781232/-/blob/main/%5B%E9%93%B6%E6%B2%B3%E5%A5%B6%E7%89%9B%5D%E8%A1%A5%E7%BB%99%E5%93%81%E7%BB%84%E5%90%88%E8%AE%A1%E7%AE%97%E5%99%A8.user.js
+// @downloadURL  https://github.com/1635781232/-/blob/main/%5B%E9%93%B6%E6%B2%B3%E5%A5%B6%E7%89%9B%5D%E8%A1%A5%E7%BB%99%E5%93%81%E7%BB%84%E5%90%88%E8%AE%A1%E7%AE%97%E5%99%A8.user.js
+// @updateURL    https://github.com/1635781232/-/blob/main/%5B%E9%93%B6%E6%B2%B3%E5%A5%B6%E7%89%9B%5D%E8%A1%A5%E7%BB%99%E5%93%81%E7%BB%84%E5%90%88%E8%AE%A1%E7%AE%97%E5%99%A8.user.js
+// @supportURL   https://github.com/1635781232/
+// @run-at       document-end
 // ==/UserScript==
+
+/*
+[银河奶牛]补给品组合计算器 v1.2
+
+功能说明：
+1. 支持回蓝(MP)和回血(HP)两种类型的补给品计算
+2. 计算左买(买入价)、右买(卖出价)和平均价格的性价比
+3. 可自定义最低恢复量需求
+4. 自动排序显示市场价格和成本分析
+5. 界面可拖动、调整大小、最小化
+6. 30分钟缓存市场数据，减少API请求
+
+恢复物品：
+- 回蓝(MP)：软糖系列、酸奶系列
+- 回血(HP)：甜甜圈系列、蛋糕系列
+
+使用方法：
+1. 选择恢复类型（回蓝/回血）
+2. 输入最低恢复量需求
+3. 点击"更新市场数据"按钮获取最新价格
+4. 查看最佳搭配建议
+
+版本历史：
+v1.0 - 初始版本，支持回蓝物品计算
+v1.1 - 添加左买/右买计算，支持最低回蓝量设置
+v1.2 - 添加回血物品计算，优化界面显示
+
+GitHub仓库：https://github.com/1635781232/
+*/
 
 (() => {
     "use strict";
